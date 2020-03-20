@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Status Saver</string>
+    <string name="title_activity_home">HomeActivity</string>
+    <string name="title_images">Images</string>
+    <string name="title_videos">Videos</string>
+    <string name="title_saved">Saved</string>
+</resources>
