@@ -22,33 +22,33 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
                     + File.separator + "files")
             val validPath = mainPath.replace(extraPortion, "")
             val statusPath = validPath + "WhatsApp/Media/.Statuses"
-            val files: MutableList<File> = File(statusPath).listFiles().toMutableList()
-            //files.filter { it.extension == "jpg" }
-            files.sortByDescending { it.lastModified() }
-            val statusList: MutableList<Status> = mutableListOf()
-            files.iterator().forEach {
-                var extension: STATUS_TYPE? = null;
-                if (it.extension == "jpg") {
-                    extension = STATUS_TYPE.IMAGE;
-                } else if (it.extension == "mp4") {
-                    extension = STATUS_TYPE.VIDEO
-                }
-                if (extension != null) {
-                    statusList.add(
-                        Status(
-                            it.absolutePath,
-                            extension
-                        )
-                    );
-                }
+            if(File(statusPath).listFiles()!=null) {
+                val files: MutableList<File> = File(statusPath).listFiles().toMutableList()
+                //files.filter { it.extension == "jpg" }
+                files.sortByDescending { it.lastModified() }
+                val statusList: MutableList<Status> = mutableListOf()
+                files.iterator().forEach {
+                    var extension: STATUS_TYPE? = null;
+                    if (it.extension == "jpg") {
+                        extension = STATUS_TYPE.IMAGE;
+                    } else if (it.extension == "mp4") {
+                        extension = STATUS_TYPE.VIDEO
+                    }
+                    if (extension != null) {
+                        statusList.add(
+                            Status(
+                                it.absolutePath,
+                                extension
+                            )
+                        );
+                    }
 
+                }
+                println("Printing size:" + statusList.size)
+                _imageList.postValue(statusList);
             }
-            println("Printing size:" + statusList.size)
 
 
-            //Saved list
-
-            _imageList.postValue(statusList);
 
         }
     }

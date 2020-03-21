@@ -1,7 +1,10 @@
 package com.ithebk.statussaver.ui.main
 
+import android.Manifest
+import android.content.pm.PackageManager
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -9,12 +12,11 @@ import com.google.gson.Gson
 import com.ithebk.statussaver.R
 import com.ithebk.statussaver.data.Status
 import com.ithebk.statussaver.ui.status.StatusFragment
+import com.ithebk.statussaver.util.Utility
 
 
 class MainActivity : AppCompatActivity() {
     private lateinit var mainViewModel: MainViewModel
-
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,13 +25,21 @@ class MainActivity : AppCompatActivity() {
             this,
             ViewModelProvider.AndroidViewModelFactory(application)
         ).get(MainViewModel::class.java)
+        if(supportActionBar!=null) {
+            supportActionBar?.elevation = 0f
+        }
+
+        init(savedInstanceState)
+
+
+    }
+    private fun init(savedInstanceState: Bundle?) {
         mainViewModel.init()
         mainViewModel.imageList.observe(this, Observer {
             setBottomNavigation(savedInstanceState, it)
         })
-
-
     }
+
 
     private fun setBottomNavigation(
         savedInstanceState: Bundle?,
