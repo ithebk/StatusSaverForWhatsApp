@@ -1,4 +1,4 @@
-package com.ithebk.statussaver.main
+package com.ithebk.statussaver.ui.main
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
@@ -20,20 +20,34 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         if (mainPath != null) {
             val extraPortion = ("Android/data/" + BuildConfig.APPLICATION_ID
                     + File.separator + "files")
-            val validPath = mainPath.replace(extraPortion, "") + "WhatsApp/Media/.Statuses"
-            val files: MutableList<File> = File(validPath).listFiles().toMutableList()
-            // files.filter { it.extension == "jpg" }
+            val validPath = mainPath.replace(extraPortion, "")
+            val statusPath = validPath + "WhatsApp/Media/.Statuses"
+            val files: MutableList<File> = File(statusPath).listFiles().toMutableList()
+            //files.filter { it.extension == "jpg" }
             files.sortByDescending { it.lastModified() }
             val statusList: MutableList<Status> = mutableListOf()
             files.iterator().forEach {
-                statusList.add(
-                    Status(
-                        it.absolutePath,
-                        STATUS_TYPE.IMAGE
-                    )
-                );
+                var extension: STATUS_TYPE? = null;
+                if (it.extension == "jpg") {
+                    extension = STATUS_TYPE.IMAGE;
+                } else if (it.extension == "mp4") {
+                    extension = STATUS_TYPE.VIDEO
+                }
+                if (extension != null) {
+                    statusList.add(
+                        Status(
+                            it.absolutePath,
+                            extension
+                        )
+                    );
+                }
+
             }
-            println("Printing size:"+statusList.size)
+            println("Printing size:" + statusList.size)
+
+
+            //Saved list
+
             _imageList.postValue(statusList);
 
         }
