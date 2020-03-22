@@ -8,27 +8,48 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:orientation="vertical"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
         <TextView
             android:id="@+id/text_view_status"
-            android:background="@color/colorPrimary"
             android:layout_width="match_parent"
-            android:textSize="15sp"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            android:gravity="center"
+            android:paddingStart="8dp"
             android:paddingLeft="8dp"
+            android:paddingEnd="8dp"
             android:paddingRight="8dp"
             android:paddingBottom="8dp"
-            android:paddingStart="8dp"
-            android:paddingEnd="8dp"
             android:textColor="#fff"
-            android:gravity="center"
-            android:layout_height="wrap_content"/>
+            android:textSize="15sp" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:clipToPadding="false"
-            android:paddingBottom="100dp"
             android:id="@+id/recycler_view"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:paddingBottom="100dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:gravity="center"
+        android:id="@+id/frame_empty_status"
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_empty" />
+        <TextView
+            android:textSize="16sp"
+            android:textColor="#303030"
+            android:text="Empty here !!"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

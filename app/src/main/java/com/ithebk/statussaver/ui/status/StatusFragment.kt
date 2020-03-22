@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.FrameLayout
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
@@ -19,6 +21,7 @@ import java.io.File
 
 class StatusFragment : Fragment() {
     private lateinit var textStatus :TextView
+    private lateinit var frameEmpty :LinearLayout
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -28,6 +31,7 @@ class StatusFragment : Fragment() {
         val targetId = (arguments?.getInt("target_id") ?: 0)
         val statusListStr: String? = arguments?.getString("status_list")
         val recyclerView: RecyclerView = root.findViewById(R.id.recycler_view)
+        frameEmpty = root.findViewById(R.id.frame_empty_status)
         textStatus = root.findViewById(R.id.text_view_status)
         if (context != null) {
             recyclerView.adapter = StatusAdapter(getStatusList(statusListStr, targetId).toMutableList(), context!!, targetId, getMainPath())
@@ -39,6 +43,13 @@ class StatusFragment : Fragment() {
 
     private fun showStatus(value: Int) {
         textStatus.text = value.toString() + " status found"
+        if(value == 0) {
+            frameEmpty.visibility = View.VISIBLE
+        }
+        else {
+            frameEmpty.visibility = View.GONE
+
+        }
     }
 
     private fun getMainPath(): String? {

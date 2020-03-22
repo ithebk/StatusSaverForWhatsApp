@@ -21,8 +21,9 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
                     + File.separator + "files")
             val validPath = mainPath.replace(extraPortion, "")
             val statusPath = validPath + "WhatsApp/Media/.Statuses"
-            if (File(statusPath).listFiles() != null) {
-                val files: MutableList<File> = File(statusPath).listFiles().toMutableList()
+            val validFile = File(statusPath)
+            if (validFile.listFiles() != null) {
+                val files: MutableList<File> = validFile.listFiles().toMutableList()
                 //files.filter { it.extension == "jpg" }
                 files.sortByDescending { it.lastModified() }
                 val statusList: MutableList<Status> = mutableListOf()
@@ -44,6 +45,9 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
                 }
                 _statusList.postValue(statusList);
+            }
+            else {
+                println("Failing")
             }
         }
     }
