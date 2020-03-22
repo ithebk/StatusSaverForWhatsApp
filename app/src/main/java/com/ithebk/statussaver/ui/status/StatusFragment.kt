@@ -11,10 +11,11 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import com.ithebk.statussaver.BuildConfig
 import com.ithebk.statussaver.R
 import com.ithebk.statussaver.data.STATUS_TYPE
 import com.ithebk.statussaver.data.Status
-import kotlinx.android.synthetic.main.fragment_status.*
+import java.io.File
 
 class StatusFragment : Fragment() {
     private lateinit var textStatus :TextView
@@ -29,7 +30,7 @@ class StatusFragment : Fragment() {
         val recyclerView: RecyclerView = root.findViewById(R.id.recycler_view)
         textStatus = root.findViewById(R.id.text_view_status)
         if (context != null) {
-            recyclerView.adapter = StatusAdapter(getStatusList(statusListStr, targetId), context!!)
+            recyclerView.adapter = StatusAdapter(getStatusList(statusListStr, targetId).toMutableList(), context!!, targetId, getMainPath())
             recyclerView.layoutManager = GridLayoutManager(context, 2)
             recyclerView.setHasFixedSize(true)
         }
@@ -37,23 +38,27 @@ class StatusFragment : Fragment() {
     }
 
     private fun showStatus(value: Int) {
-        if (value > 0) {
-            textStatus.visibility = View.VISIBLE
-            textStatus.text = value.toString() + " status found"
-        } else {
-            textStatus.visibility = View.GONE
-        }
+        textStatus.text = value.toString() + " status found"
     }
 
+    private fun getMainPath(): String? {
+        if(context!=null) {
+            val mainPath: String? = context!!.getExternalFilesDir(null)?.absolutePath
+            if (mainPath != null) {
+                val extraPortion = ("Android/data/" + BuildConfig.APPLICATION_ID
+                        + File.separator + "files")
+                return mainPath.replace(extraPortion, "")
+            }
+        }
+        return null;
+    }
     private fun getStatusList(statusListStr: String?, targetId: Int): List<Status> {
         val turnsType = object : TypeToken<List<Status>>() {}.type
         var list = Gson().fromJson<List<Status>>(statusListStr, turnsType)
         if (targetId == R.id.navigation_images) {
-            println("Hello1")
             list = list.filter { it.type == STATUS_TYPE.IMAGE }
 
-        } else {
-            println("Hello2")
+        } else if(targetId == R.id.navigation_videos) {
             list = list.filter { it.type == STATUS_TYPE.VIDEO }
         }
         showStatus(list.size)

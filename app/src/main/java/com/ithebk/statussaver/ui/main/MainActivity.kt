@@ -1,18 +1,15 @@
 package com.ithebk.statussaver.ui.main
 
-import android.Manifest
-import android.content.pm.PackageManager
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.gson.Gson
 import com.ithebk.statussaver.R
 import com.ithebk.statussaver.data.Status
+import com.ithebk.statussaver.ui.status.SavedStatusFragment
 import com.ithebk.statussaver.ui.status.StatusFragment
-import com.ithebk.statussaver.util.Utility
 
 
 class MainActivity : AppCompatActivity() {
@@ -35,17 +32,17 @@ class MainActivity : AppCompatActivity() {
     }
     private fun init(savedInstanceState: Bundle?) {
         mainViewModel.init()
-        mainViewModel.imageList.observe(this, Observer {
-            setBottomNavigation(savedInstanceState, it)
+        mainViewModel.statusList.observe(this, Observer { statusList ->
+            setBottomNavigation(savedInstanceState, statusList)
         })
     }
 
 
     private fun setBottomNavigation(
         savedInstanceState: Bundle?,
-        statusList: List<Status>) {
+        statusList: List<Status>
+    ) {
         val statusListStr = Gson().toJson(statusList)
-        println("Printing Time")
         val navView: BottomNavigationView = findViewById(R.id.nav_view)
         if (savedInstanceState == null) {
             val fragment =  StatusFragment.newInstance(statusListStr, R.id.navigation_images)
@@ -54,11 +51,18 @@ class MainActivity : AppCompatActivity() {
         }
         navView.setOnNavigationItemSelectedListener(BottomNavigationView.OnNavigationItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
-                R.id.navigation_images, R.id.navigation_videos, R.id.navigation_saved -> {
-                    val fragment = StatusFragment.newInstance(statusListStr,menuItem.itemId)
+                R.id.navigation_images, R.id.navigation_videos -> {
+                    val fragment = StatusFragment.newInstance(statusListStr, menuItem.itemId)
                     supportFragmentManager.beginTransaction().replace(R.id.container, fragment, fragment.javaClass.getSimpleName())
                         .commit()
                     return@OnNavigationItemSelectedListener true
+                }
+                R.id.navigation_saved -> {
+                    val fragment = SavedStatusFragment()
+                    supportFragmentManager.beginTransaction().replace(R.id.container, fragment, fragment.javaClass.getSimpleName())
+                        .commit()
+                    return@OnNavigationItemSelectedListener true
+
                 }
             }
             false

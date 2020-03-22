@@ -4,4 +4,5 @@
     <string name="title_images">Images</string>
     <string name="title_videos">Videos</string>
     <string name="title_saved">Saved</string>
+    <string name="send_to">Share image to…</string>
 </resources>

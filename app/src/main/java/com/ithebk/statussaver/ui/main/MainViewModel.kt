@@ -11,10 +11,9 @@ import java.io.File
 
 class MainViewModel(application: Application) : AndroidViewModel(application) {
     private val context = getApplication<Application>().applicationContext
-    private val _imageList = MutableLiveData<List<Status>>()
-    val imageList: LiveData<List<Status>>
-        get() = _imageList;
-
+    private val _statusList = MutableLiveData<List<Status>>()
+    val statusList: LiveData<List<Status>>
+        get() = _statusList;
     fun init() {
         val mainPath: String? = context.getExternalFilesDir(null)?.absolutePath
         if (mainPath != null) {
@@ -22,7 +21,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
                     + File.separator + "files")
             val validPath = mainPath.replace(extraPortion, "")
             val statusPath = validPath + "WhatsApp/Media/.Statuses"
-            if(File(statusPath).listFiles()!=null) {
+            if (File(statusPath).listFiles() != null) {
                 val files: MutableList<File> = File(statusPath).listFiles().toMutableList()
                 //files.filter { it.extension == "jpg" }
                 files.sortByDescending { it.lastModified() }
@@ -44,12 +43,8 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
                     }
 
                 }
-                println("Printing size:" + statusList.size)
-                _imageList.postValue(statusList);
+                _statusList.postValue(statusList);
             }
-
-
-
         }
     }
 }
