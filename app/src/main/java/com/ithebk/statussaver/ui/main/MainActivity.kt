@@ -33,11 +33,18 @@ class MainActivity : AppCompatActivity() {
         }
 
         init(savedInstanceState)
-//        MobileAds.initialize(this) {}
-//        mInterstitialAd = InterstitialAd(this)
-//        mInterstitialAd.adUnitId =
-//            if (BuildConfig.DEBUG) "ca-app-pub-3940256099942544/1033173712" else "ca-app-pub-7898163058261734/7476853276"
-//        mInterstitialAd.loadAd(AdRequest.Builder().build())
+        MobileAds.initialize(this) {}
+        mInterstitialAd = InterstitialAd(this)
+        mInterstitialAd.adUnitId =
+            if (BuildConfig.DEBUG) "ca-app-pub-3940256099942544/1033173712" else "ca-app-pub-7898163058261734/7476853276"
+        mInterstitialAd.loadAd(AdRequest.Builder().build())
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if(mInterstitialAd.isLoaded){
+            mInterstitialAd.show()
+        }
     }
 
     private fun init(savedInstanceState: Bundle?) {
