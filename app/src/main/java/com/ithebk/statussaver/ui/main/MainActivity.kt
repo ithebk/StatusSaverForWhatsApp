@@ -1,6 +1,7 @@
 package com.ithebk.statussaver.ui.main
 
 import android.os.Bundle
+import android.os.Debug
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -15,12 +16,12 @@ import com.ithebk.statussaver.R
 import com.ithebk.statussaver.data.Status
 import com.ithebk.statussaver.ui.status.SavedStatusFragment
 import com.ithebk.statussaver.ui.status.StatusFragment
+import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
 
 
 class MainActivity : AppCompatActivity() {
     private lateinit var mainViewModel: MainViewModel
-    private lateinit var mInterstitialAd: InterstitialAd
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -34,17 +35,15 @@ class MainActivity : AppCompatActivity() {
 
         init(savedInstanceState)
         MobileAds.initialize(this) {}
-        mInterstitialAd = InterstitialAd(this)
-        mInterstitialAd.adUnitId =
-            if (BuildConfig.DEBUG) "ca-app-pub-3940256099942544/1033173712" else "ca-app-pub-7898163058261734/7476853276"
-        mInterstitialAd.loadAd(AdRequest.Builder().build())
+        val adRequest = AdRequest.Builder().build()
+        adView.loadAd(adRequest)
     }
 
     override fun onResume() {
         super.onResume()
-        if(mInterstitialAd.isLoaded){
-            mInterstitialAd.show()
-        }
+//        if(mInterstitialAd.isLoaded){
+//            mInterstitialAd.show()
+//        }
     }
 
     private fun init(savedInstanceState: Bundle?) {

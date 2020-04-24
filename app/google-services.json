@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "707904944210",
+    "firebase_url": "https://status-saver-for-whatsap-60059.firebaseio.com",
+    "project_id": "status-saver-for-whatsap-60059",
+    "storage_bucket": "status-saver-for-whatsap-60059.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:707904944210:android:01eafafc67eee46242c78b",
+        "android_client_info": {
+          "package_name": "com.ithebk.statussaver"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "707904944210-54m31dba5bkdcm67jng7oghl1l627pn6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD2yHQzFRqbfMGQt9tIvTylq3mOkUmLEp4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "707904944210-54m31dba5bkdcm67jng7oghl1l627pn6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
