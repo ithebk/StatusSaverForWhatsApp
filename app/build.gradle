@@ -50,7 +50,14 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
     implementation 'androidx.navigation:navigation-fragment-ktx:2.2.1'
     implementation 'androidx.navigation:navigation-ui-ktx:2.2.1'
-    implementation 'com.google.firebase:firebase-analytics:17.3.0'
+
+
+    implementation platform('com.google.firebase:firebase-bom:26.4.0')
+
+    // Add the dependency for the Firebase SDK for Google Analytics
+    // When using the BoM, don't specify versions in Firebase dependencies
+    implementation 'com.google.firebase:firebase-analytics-ktx'
+
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
@@ -61,6 +68,6 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.8.6'
 
     //Adview
-    implementation 'com.google.android.gms:play-services-ads:19.0.1'
+    implementation 'com.google.android.gms:play-services-ads:19.7.0'
 
 }

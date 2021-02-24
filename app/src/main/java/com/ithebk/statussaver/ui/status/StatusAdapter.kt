@@ -13,6 +13,7 @@ import com.bumptech.glide.Glide
 import com.ithebk.statussaver.R
 import com.ithebk.statussaver.data.STATUS_TYPE
 import com.ithebk.statussaver.data.Status
+import com.ithebk.statussaver.ui.main.MainActivity
 import kotlinx.android.synthetic.main.status_item_view.view.*
 import java.io.*
 import java.util.*
@@ -92,13 +93,18 @@ class StatusAdapter(
                 val outputStream: OutputStream = FileOutputStream(dest)
                 val buf = ByteArray(1024)
                 var len: Int = inputStream.read(buf)
-                while (len > 0) {
-                    outputStream.write(buf, 0, len)
-                    len = inputStream.read(buf)
-                }
-                inputStream.close()
-                outputStream.close()
+                Thread(Runnable {
+                    while (len > 0) {
+                        outputStream.write(buf, 0, len)
+                        len = inputStream.read(buf)
+                    }
+                    inputStream.close()
+                    outputStream.close()
+                    println("Write operation done");
+                }).start()
+
                 Toast.makeText(context, "Saved", Toast.LENGTH_SHORT).show()
+                (context as MainActivity).loadFullScreenAd()
             } else {
                 Toast.makeText(context, "Already exits", Toast.LENGTH_SHORT).show()
             }

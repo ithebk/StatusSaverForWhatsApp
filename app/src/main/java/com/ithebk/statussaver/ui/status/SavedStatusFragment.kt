@@ -39,7 +39,7 @@ class SavedStatusFragment : Fragment() {
     }
 
     private fun showStatus(value: Int) {
-        textStatus.text = value.toString() + " status found"
+        textStatus.text = "$value status found"
         if(value == 0) {
             frameEmpty.visibility = View.VISIBLE
         }
