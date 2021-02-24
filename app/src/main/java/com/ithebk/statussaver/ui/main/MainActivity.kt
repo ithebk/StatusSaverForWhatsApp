@@ -1,8 +1,13 @@
 package com.ithebk.statussaver.ui.main
 
+import android.content.ActivityNotFoundException
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.os.Debug
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -134,5 +139,29 @@ class MainActivity : AppCompatActivity() {
             false
         })
 
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.main_menu, menu)
+        return true;
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        val appPackageName = packageName; // getPackageName() from Context or Activity object
+        if (item.itemId == R.id.action_rate) {
+            try {
+                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=$appPackageName")));
+            } catch (ignore: ActivityNotFoundException) {
+                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=$appPackageName")));
+            }
+        }
+        else if(item.itemId == R.id.action_share) {
+            val intent = Intent(Intent.ACTION_SEND)
+            intent.type = "text/plain"
+            intent.putExtra(Intent.EXTRA_TEXT,"Try this Awesome App 'Status Saver' which helps you in Saving all the WhatsApp Statuses..!\n" +
+                    "https://play.google.com/store/apps/details?id=$appPackageName")
+            startActivity(Intent(intent))
+        }
+        return true;
     }
 }
